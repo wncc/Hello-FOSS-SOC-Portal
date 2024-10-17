@@ -1,8 +1,8 @@
 # SoC-Portal
 
-### Official repository for the SoC Portal Project created by TTY16
+### Official repository for the SoC Portal Project created by TTY17
 
-#### This repository is a part of HelloFOSS '23
+#### This repository is a part of HelloFOSS '24
 
 An on-going project of the Web and Coding Club. Built using Django REST Framework and React.
 
