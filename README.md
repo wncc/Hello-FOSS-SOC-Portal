@@ -1,4 +1,4 @@
-# SoC-Portal
+# SoC-Portal - 2024
 
 ### Official repository for the SoC Portal Project created by TTY17
 
