@@ -24,7 +24,7 @@ export default function Login() {
             ...prevProfile,
             [id]: value,
         }));
-        setError(false);
+        setError(''); // Reset error message on input change
     };
 
  
@@ -32,6 +32,21 @@ export default function Login() {
     // Handling form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Check for empty fields
+        if (!profile.username && !profile.password) {
+            setError('Please fill in both Username and Password.');
+            return;
+        } else if (!profile.username) {
+            setError('Please fill in your Username');
+            return;
+        } else if (!profile.password) {
+            setError('Please fill in your Password.');
+        }
+          else {
+            setError("Wrong Username or Password ") 
+            return;
+        }
         
         const formData = new FormData();
         Object.keys(profile).forEach(key => {
@@ -59,11 +74,29 @@ export default function Login() {
     };
 
     // Error message display
+    // const errorMessage = () => {
+    //     return (
+    //             <div
+    //                 className="error"
+    //                 style={{ display: error ? '' : 'none' }}>
+    //                 <div role="alert" className="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    //                     <div className="flex items-center gap-2 text-red-800">
+    //                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+    //                             <path
+    //                                 fillRule="evenodd"
+    //                                 d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+    //                                 clipRule="evenodd"
+    //                             />
+    //                         </svg>
+    //                         <strong className="block font-medium"> Wrong Username or Password </strong>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //     );
+    // };
     const errorMessage = () => {
         return (
-            <div
-                className="error"
-                style={{ display: error ? '' : 'none' }}>
+            <div className="error" style={{ display: error ? '' : 'none' }}>
                 <div role="alert" className="rounded border-s-4 border-red-500 bg-red-50 p-4">
                     <div className="flex items-center gap-2 text-red-800">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -73,8 +106,7 @@ export default function Login() {
                                 clipRule="evenodd"
                             />
                         </svg>
-
-                        <strong className="block font-medium"> Wrong Username or Password </strong>
+                        <strong className="block font-medium"> {error} </strong>
                     </div>
                 </div>
             </div>
@@ -89,6 +121,7 @@ export default function Login() {
         <div className="form">
             <div className="messages">
                 {errorMessage()}
+                
             </div>
 
             <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -115,7 +148,7 @@ export default function Login() {
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                     placeholder="Enter Roll No."
                                     onChange={handleProfile}
-                                    required
+                                    
                                 />
                             </div>
                         </div>
@@ -129,7 +162,7 @@ export default function Login() {
                                      className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                      placeholder="Enter Password"
                                      onChange={handleProfile}
-                                     required
+                                     
                                  />
                                  <button
                                      type="button"
