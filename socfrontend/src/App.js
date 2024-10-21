@@ -23,6 +23,7 @@ import PreferenceFormFilled from "./pages/PreferenceFormFilled";
 import api from './utils/api';
 import Wishlist from "./pages/Wishlist";
 import Home from "./pages/Home";
+import ForgetPassword from "./pages/ForgetPassword";
 
 export default function App() {
   const [authToken, setAuthToken] = useState(null);
@@ -65,6 +66,7 @@ export default function App() {
             <Route path="/registerSuccess" element={<RegisterSuccess />} />
             <Route path="/verify-email/:token" element={<VerifyEmail />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/forget-passowrd" element={<ForgetPassword/>}/>
           </Route>
 
           {/* Routes for Authenticated Users */}

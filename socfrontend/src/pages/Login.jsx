@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import api from "../utils/api";
 import { useNavigate, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
 
 export default function Login() {
     // States for user profile
@@ -11,6 +14,7 @@ export default function Login() {
 
     // States for checking the errors
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
     const navigate = useNavigate();
 
     // Handling input change
@@ -22,6 +26,8 @@ export default function Login() {
         }));
         setError(false);
     };
+
+ 
 
     // Handling form submission
     const handleSubmit = (e) => {
@@ -74,6 +80,10 @@ export default function Login() {
             </div>
         );
     };
+        // Toggle password visibility
+        const togglePasswordVisibility = () => {
+            setShowPassword((prevState) => !prevState);
+        };
 
     return (
         <div className="form">
@@ -114,13 +124,33 @@ export default function Login() {
                             <label htmlFor="password">Password</label>
                             <div className="relative">
                                 <input
-                                    type="password"
-                                    id="password"
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                    placeholder="Enter Password"
-                                    onChange={handleProfile}
-                                    required
-                                />
+                                     type={showPassword ? "text" : "password"} // Change input type based on visibility state
+                                     id="password"
+                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                     placeholder="Enter Password"
+                                     onChange={handleProfile}
+                                     required
+                                 />
+                                 <button
+                                     type="button"
+                                     className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                     onClick={togglePasswordVisibility} // Toggle visibility on click
+                                     aria-label="Toggle password visibility"
+                                 >
+                                     {showPassword ? (
+                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 12c1.24-2.71 3.12-5 6-5s5.76 2.29 7 5c-1.24 2.71-3.12 5-6 5s-5.76-2.29-7-5z" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12c0 1.78-1.5 3-3 3s-3-1.22-3-3" />
+                                         </svg>
+                                     ) : (
+                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12c0 1.78-1.5 3-3 3s-3-1.22-3-3" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c4.418 0 8 3.582 8 8s-3.582 8-8 8a8.001 8.001 0 01-6.69-3.33" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M6.34 6.34C5.46 7.27 4.785 8.5 4.337 9.83M12 12c-.22 0-.434-.028-.641-.079M12 12c-.186.051-.395.079-.641.079" />
+                                         </svg>
+                                     )}
+                                 </button>
+    
                             </div>
                         </div>
 
@@ -134,9 +164,14 @@ export default function Login() {
                         <p className="text-center text-sm text-gray-500">
                             No account? <Link className="underline" to="/register">Register Now</Link>
                         </p>
+                        <p className="text-center text-sm text-blue-500">
+                            <Link className="underline" to="/forget-password">Forget Password?</Link>
+                        </p>
                     </form>
                 </div>
             </div>
         </div>
     );
 }
+
+
