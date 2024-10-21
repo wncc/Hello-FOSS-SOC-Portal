@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import api from "../utils/api";
 import { useNavigate, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
+
 
 export default function Login() {
     // States for user profile
@@ -11,6 +14,7 @@ export default function Login() {
 
     // States for checking the errors
     const [error, setError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
     const navigate = useNavigate();
 
     // Handling input change
@@ -20,12 +24,29 @@ export default function Login() {
             ...prevProfile,
             [id]: value,
         }));
-        setError(false);
+        setError(''); // Reset error message on input change
     };
+
+ 
 
     // Handling form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Check for empty fields
+        if (!profile.username && !profile.password) {
+            setError('Please fill in both Username and Password.');
+            return;
+        } else if (!profile.username) {
+            setError('Please fill in your Username');
+            return;
+        } else if (!profile.password) {
+            setError('Please fill in your Password.');
+        }
+          else {
+            setError("Wrong Username or Password ") 
+            return;
+        }
         
         const formData = new FormData();
         Object.keys(profile).forEach(key => {
@@ -53,11 +74,29 @@ export default function Login() {
     };
 
     // Error message display
+    // const errorMessage = () => {
+    //     return (
+    //             <div
+    //                 className="error"
+    //                 style={{ display: error ? '' : 'none' }}>
+    //                 <div role="alert" className="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    //                     <div className="flex items-center gap-2 text-red-800">
+    //                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+    //                             <path
+    //                                 fillRule="evenodd"
+    //                                 d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+    //                                 clipRule="evenodd"
+    //                             />
+    //                         </svg>
+    //                         <strong className="block font-medium"> Wrong Username or Password </strong>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //     );
+    // };
     const errorMessage = () => {
         return (
-            <div
-                className="error"
-                style={{ display: error ? '' : 'none' }}>
+            <div className="error" style={{ display: error ? '' : 'none' }}>
                 <div role="alert" className="rounded border-s-4 border-red-500 bg-red-50 p-4">
                     <div className="flex items-center gap-2 text-red-800">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -67,18 +106,22 @@ export default function Login() {
                                 clipRule="evenodd"
                             />
                         </svg>
-
-                        <strong className="block font-medium"> Wrong Username or Password </strong>
+                        <strong className="block font-medium"> {error} </strong>
                     </div>
                 </div>
             </div>
         );
     };
+        // Toggle password visibility
+        const togglePasswordVisibility = () => {
+            setShowPassword((prevState) => !prevState);
+        };
 
     return (
         <div className="form">
             <div className="messages">
                 {errorMessage()}
+                
             </div>
 
             <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -105,7 +148,7 @@ export default function Login() {
                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                                     placeholder="Enter Roll No."
                                     onChange={handleProfile}
-                                    required
+                                    
                                 />
                             </div>
                         </div>
@@ -114,13 +157,33 @@ export default function Login() {
                             <label htmlFor="password">Password</label>
                             <div className="relative">
                                 <input
-                                    type="password"
-                                    id="password"
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                                    placeholder="Enter Password"
-                                    onChange={handleProfile}
-                                    required
-                                />
+                                     type={showPassword ? "text" : "password"} // Change input type based on visibility state
+                                     id="password"
+                                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                     placeholder="Enter Password"
+                                     onChange={handleProfile}
+                                     
+                                 />
+                                 <button
+                                     type="button"
+                                     className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                     onClick={togglePasswordVisibility} // Toggle visibility on click
+                                     aria-label="Toggle password visibility"
+                                 >
+                                     {showPassword ? (
+                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 12c1.24-2.71 3.12-5 6-5s5.76 2.29 7 5c-1.24 2.71-3.12 5-6 5s-5.76-2.29-7-5z" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12c0 1.78-1.5 3-3 3s-3-1.22-3-3" />
+                                         </svg>
+                                     ) : (
+                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12c0 1.78-1.5 3-3 3s-3-1.22-3-3" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c4.418 0 8 3.582 8 8s-3.582 8-8 8a8.001 8.001 0 01-6.69-3.33" />
+                                             <path strokeLinecap="round" strokeLinejoin="round" d="M6.34 6.34C5.46 7.27 4.785 8.5 4.337 9.83M12 12c-.22 0-.434-.028-.641-.079M12 12c-.186.051-.395.079-.641.079" />
+                                         </svg>
+                                     )}
+                                 </button>
+    
                             </div>
                         </div>
 
@@ -134,9 +197,14 @@ export default function Login() {
                         <p className="text-center text-sm text-gray-500">
                             No account? <Link className="underline" to="/register">Register Now</Link>
                         </p>
+                        <p className="text-center text-sm text-blue-500">
+                            <Link className="underline" to="/forget-password">Forget Password?</Link>
+                        </p>
                     </form>
                 </div>
             </div>
         </div>
     );
 }
+
+

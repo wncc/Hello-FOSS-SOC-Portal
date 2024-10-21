@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import wncc_logo from '../assets/wncc-logo.png';
 import PropTypes from "prop-types";
+import Darkmode from "./darkmode";
 
 export default function Navbar(props) {
   console.log(props.authToken);
@@ -50,6 +51,9 @@ export default function Navbar(props) {
             <li>
               <Link to="" className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</Link>
             </li>
+            <li className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+              <Darkmode/>
+            </li>
 
             {authToken ? (
               <>
@@ -65,6 +69,7 @@ export default function Navbar(props) {
                 <li>
                   <Link to="logout" className="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-black-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</Link>
                 </li>
+                
               </>
             ) : (
               <>
