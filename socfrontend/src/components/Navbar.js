@@ -15,7 +15,7 @@ export default function Navbar(props) {
   return (
     <nav className="bg-indigo-600 border-gray-200 dark:bg-gray-900 dark:border-gray-700 shadow-xl opacity-90">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <Link to="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link to="./" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src={wncc_logo} className="h-10" alt="WnCC Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-white dark:text-white">WnCC</span>
         </Link>
