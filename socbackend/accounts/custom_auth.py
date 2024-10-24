@@ -5,17 +5,19 @@ logger = logging.getLogger(__name__)
 
 class CookieJWTAuthentication(JWTAuthentication):
     def authenticate(self, request):
-        header = None
+        token = None
+        user = None
         try:
-            header = super().authenticate(request)
+            user, token = super().authenticate(request)
+            # print({user, token})
         except Exception as e:
             logger.debug(f"Header login failed: {e}")
 
         
-        if header is None:
+        if token is None:
             # Attempt to get token from the cookie
             token = request.COOKIES.get("auth")
             if token:
                 return self.get_user(self.get_validated_token(token)), None
 
-        return header, None
+        return user, token
