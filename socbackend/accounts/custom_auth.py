@@ -9,7 +9,7 @@ class CookieJWTAuthentication(JWTAuthentication):
         user = None
         try:
             user, token = super().authenticate(request)
-            print({user, token})
+            # print({user, token})
         except Exception as e:
             logger.debug(f"Header login failed: {e}")
 
