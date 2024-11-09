@@ -82,7 +82,7 @@ export default function Login() {
     };
 
     return (
-        <div className="form">
+        <div className="form h-[calc(100vh-72px)] dark:bg-gray-800 dark:text-white">
             <div className="messages">
                 {errorMessage()}
             </div>
@@ -99,7 +99,7 @@ export default function Login() {
                         </svg>
                     </h1>
 
-                    <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+                    <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8 dark:bg-slate-700 ">
                         <p className="text-center text-lg font-medium">Login to your account</p>
 
                         <div>
@@ -108,7 +108,7 @@ export default function Login() {
                                 <input
                                     type="text"
                                     id="username"
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Roll No."
                                     onChange={handleProfile}
                                     required
@@ -122,12 +122,11 @@ export default function Login() {
                                 <input
                                     type={passwordVisible ? 'text' : 'password'}
                                     id="password"
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Password"
                                     onChange={handleProfile}
                                     required
                                 />
-                                {/* Eye icon */}
                                 <span
                                     className="absolute inset-y-0 right-4 flex items-center cursor-pointer"
                                     onClick={togglePasswordVisibility}
@@ -157,6 +156,9 @@ export default function Login() {
 
                         <p className="text-center text-sm text-gray-500">
                             <Link className="underline" to="/forget">Forget Password</Link>
+                        </p>
+                        <p className="text-center text-sm text-gray-500">
+                            <Link className="underline" to="/forget">Forget Username</Link>
                         </p>
                         <p className="text-center text-sm text-gray-500">
                             No account? <Link className="underline" to="/register">Register Now</Link>

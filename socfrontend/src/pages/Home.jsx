@@ -5,7 +5,7 @@ function Home() {
     return (  
     <>
     
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 dark:bg-gray-800">
             <div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ function Home() {
                 y="0"
                 enableBackground="new 0 0 500 500"
                 viewBox="0 0 500 500"
-                className="animate-fade-up  m-auto lg:h-[calc(100vh-72px)]"
+                className="animate-fade-down m-auto lg:h-[calc(100vh-72px)]"
                 >
                 <ellipse
                     cx="250"
@@ -479,13 +479,13 @@ function Home() {
                 </g>
                 </svg>
             </div>
-            <div className="p-8 font-mono ">
+            <div className="p-8 font-mono flex flex-col justify-center">
                 <div className="flex flex-col items-center text-center">
                     <h1 className="text-indigo-600 text-5xl animate-fade-up flex flex-row">Web and Coding Club</h1>
                     <h1 className="text-indigo-600 text-5xl animate-fade-up flex flex-row">Presents</h1>
                     <h1 className="text-indigo-600 text-4xl animate-fade-up flex flex-row">Seasons of Code</h1>
                 </div>
-                <div className="mt-10 flex flex-col items-center ">
+                <div className="mt-10 flex flex-col items-center dark:text-white ">
                     <h1 className="animate-fade-up text-justify utilities">Welcome to Seasons of Code, the flagship event of the Web and Coding Club at IIT Bombay! We invite all aspiring coders and innovators to embark on an exhilarating journey of project development. Embrace the spirit of creativity as you delve into the realms of technology and coding. Whether you're a seasoned programmer or just starting your coding odyssey, Seasons of Code offers a platform for you to showcase your skills and bring your ideas to life. Join us in shaping the future of technology, one line of code at a time. Let's code, innovate, and inspire together!</h1>
                     <Link
                         className="animate-fade-up inline-flex items-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 mt-10"
