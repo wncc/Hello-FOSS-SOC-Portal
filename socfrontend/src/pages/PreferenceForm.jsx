@@ -266,7 +266,7 @@ export default function PreferenceForm() {
 
     return (
         <>
-            <div className="form">
+            <div className="form h-[calc(100vh-72px)] dark:bg-gray-800 dark:text-white">
 
             {/* Calling to the methods */}
             <div className="messages">

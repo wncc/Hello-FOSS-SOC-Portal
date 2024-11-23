@@ -5,15 +5,15 @@ function Home() {
     return (  
     <>
     
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
-            <div className="h-screen">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 dark:bg-gray-800">
+            <div>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 x="0"
                 y="0"
                 enableBackground="new 0 0 500 500"
                 viewBox="0 0 500 500"
-                className="animate-fade-up h-auto m-auto"
+                className="animate-fade-down m-auto lg:h-[calc(100vh-72px)]"
                 >
                 <ellipse
                     cx="250"
@@ -478,23 +478,20 @@ function Home() {
                     </g>
                 </g>
                 </svg>
-                {/* <img src={HomePagePhotu} alt="" className="mt-10"/> */}
             </div>
-            <div className="h-screen rounded-lg font-mono font-left flex flex-col justify-center">
-                <div className="flex flex-col items-center justify-center">
+            <div className="p-8 font-mono flex flex-col justify-center">
+                <div className="flex flex-col items-center text-center">
                     <h1 className="text-indigo-600 text-5xl animate-fade-up flex flex-row">Web and Coding Club</h1>
                     <h1 className="text-indigo-600 text-5xl animate-fade-up flex flex-row">Presents</h1>
                     <h1 className="text-indigo-600 text-4xl animate-fade-up flex flex-row">Seasons of Code</h1>
-                    {/* <h1 className="text-indigo-600 text-6xl animate-fade-up">Of</h1>
-                    <h1 className="text-indigo-600 text-6xl animate-fade-up">Code</h1> */}
                 </div>
-                <div className="h-1/2  mt-10">
-                    <h1 className="animate-fade-up">Welcome to Seasons of Code, the flagship event of the Web and Coding Club at IIT Bombay! We invite all aspiring coders and innovators to embark on an exhilarating journey of project development. Embrace the spirit of creativity as you delve into the realms of technology and coding. Whether you're a seasoned programmer or just starting your coding odyssey, Seasons of Code offers a platform for you to showcase your skills and bring your ideas to life. Join us in shaping the future of technology, one line of code at a time. Let's code, innovate, and inspire together!</h1>
+                <div className="mt-10 flex flex-col items-center dark:text-white ">
+                    <h1 className="animate-fade-up text-justify utilities">Welcome to Seasons of Code, the flagship event of the Web and Coding Club at IIT Bombay! We invite all aspiring coders and innovators to embark on an exhilarating journey of project development. Embrace the spirit of creativity as you delve into the realms of technology and coding. Whether you're a seasoned programmer or just starting your coding odyssey, Seasons of Code offers a platform for you to showcase your skills and bring your ideas to life. Join us in shaping the future of technology, one line of code at a time. Let's code, innovate, and inspire together!</h1>
                     <Link
                         className="animate-fade-up inline-flex items-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 mt-10"
                         to="/current_projects"
                         >
-                        <span className="text-sm font-medium"> Explore Projects </span>
+                        <span className="text-sm font-medium "> Explore Projects </span>
 
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 pl-1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
