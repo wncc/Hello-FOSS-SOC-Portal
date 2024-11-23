@@ -44,8 +44,4 @@ def upload_projects(csv_file_path):
                 project.code = str(uuid.uuid4())[:8]
 
             no_of_projects = data.__len__
-<<<<<<< HEAD
             project.save()
-=======
-            project.save()
->>>>>>> 1748e05f5ce90e26d91fdb18e7e3dbff576f95cc
