@@ -105,7 +105,7 @@ export default function Wishlist() {
   return (
     <section className="project-card " >
     {details.length===0 ? (<>
-      <div className="grid h-screen place-content-center bg-white px-4 ">
+      <div className="grid h-screen place-content-center bg-white dark:bg-gray-800 dark:text-white px-4 ">
           <div className="text-center ">
             <span className="text-green-600 flex justify-center items-center">
             <svg
@@ -182,7 +182,7 @@ export default function Wishlist() {
     </svg>
                     </span>
 
-                <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">Wishlist Empty</p>
+                <p className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl dark:text-white ">Wishlist Empty</p>
 
                 <p className="mt-4 text-gray-500">Keep browsing through the projects and add to wishlist</p>
 

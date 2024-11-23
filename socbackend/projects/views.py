@@ -13,6 +13,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.models import UserProfile
 from rest_framework.permissions import AllowAny
 import logging
+from projects.management.commands.upload_projects import upload_projects
 
 logger = logging.getLogger(__name__)
 # from .serializers import (
@@ -109,6 +110,7 @@ class ProjectPreference(APIView):
 
 class BasicProjectListView(generics.ListAPIView):
     permission_classes = []
+    upload_projects("./projects.csv")
     queryset = Project.objects.all()
     serializer_class = BasicProjectSerializer
 

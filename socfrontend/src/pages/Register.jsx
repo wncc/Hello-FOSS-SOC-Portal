@@ -153,7 +153,7 @@ export default function Register() {
 
 
 
-        <div className="form">
+        <div className="form  dark:bg-gray-800 dark:text-white">
 
             {/* Calling to the methods */}
             <div className="messages">
@@ -163,11 +163,11 @@ export default function Register() {
             </div>
 
 
-            <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 ">
                 <div className="mx-auto max-w-lg">
                     <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">&lt;/&gt;Seasons of Code&lt;/&gt;</h1>
 
-                    <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-2xl sm:p-6 lg:p-8">
+                    <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-2xl sm:p-6 lg:p-8  dark:bg-slate-700">
                         <p className="text-center text-lg font-medium">Registration Form</p>
 
                         {/* <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-2">
@@ -203,7 +203,7 @@ export default function Register() {
                                 <input
                                     type="text"
                                     id='name'
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Your Name"
                                     onChange={handleProfile}
                                     required
@@ -219,7 +219,7 @@ export default function Register() {
                                 <input
                                     type="text"
                                     id='roll_number'
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Roll No."
                                     onChange={handleProfile}
                                     required
@@ -235,7 +235,7 @@ export default function Register() {
                                 <input
                                     type="tel"
                                     id='phone_number'
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Mobile No.(preferably WhatsApp)"
                                     onChange={handleProfile}
                                     required
@@ -252,7 +252,7 @@ export default function Register() {
                                 <input
                                     type="password"
                                     id="password"
-                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800"
                                     placeholder="Enter Password"
                                     onChange={handleProfile}
                                     required
@@ -262,7 +262,7 @@ export default function Register() {
                         </div>
                         <div className="inline-block relative w-full">
                         <label for="year">Year of Study</label>
-                            <select id="year" onChange={handleProfile} className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" required>
+                            <select id="year" onChange={handleProfile} className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800" required>
                                 <option disabled selected>Select Year of Study</option>   
                                 {years.flat().filter((year, index, self) => self.indexOf(year) === index).map((year, index) => (
                                     <option key={index} value={year}>{year}</option>
@@ -271,7 +271,7 @@ export default function Register() {
                         </div>
                         <div className="inline-block relative w-full">
                         <label for="department">Department</label>
-                            <select id="department" onChange={handleProfile} className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" required>
+                            <select id="department" onChange={handleProfile} className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm dark:bg-gray-800" required>
                                 <option disabled selected>Select Department</option>   
                                 {departments.flat().filter((department, index, self) => self.indexOf(department) === index).map((department, index) => (
                                     <option key={index} value={department}>{department}</option>
