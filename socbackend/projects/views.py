@@ -110,7 +110,8 @@ class ProjectPreference(APIView):
 
 class BasicProjectListView(generics.ListAPIView):
     permission_classes = []
-    upload_projects("./projects.csv")
+    if True:
+        upload_projects("./projects.csv")
     queryset = Project.objects.all()
     serializer_class = BasicProjectSerializer
 
