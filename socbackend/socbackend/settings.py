@@ -56,6 +56,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default backend for user authentication
 ]
 
+
 INSTALLED_APPS = [
     "corsheaders",
     "django.contrib.admin",
@@ -168,7 +169,8 @@ SSO_BAD_CERT = True  # Set to False if you have a valid certificate
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+      #  "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": ':memory',
     }
 }
 
