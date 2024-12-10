@@ -1,0 +1,73 @@
+/* Search Bar Container */
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space above the search bar */
+  }
+  
+  /* Search Bar Styling */
+  .search-bar {
+    width: 100%;
+    padding: 12px 20px; /* Inner padding: 12px vertical, 20px horizontal */
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc; /* Underline for modern design */
+    background-color: transparent;
+    color: #333;
+    text-align: center; /* Center the placeholder text */
+    transition: all 0.3s ease-in-out;
+    outline: none;
+  }
+  
+  /* Placeholder Styling */
+  .search-bar::placeholder {
+    color: #aaa; /* Subtle placeholder color */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* On Focus - Animated Effect */
+  .search-bar:focus {
+    text-align: left; /* Align input text to the left on focus */
+    border-bottom: 2px solid #4a90e2; /* Change the underline color */
+    background-color: #f6f6ff; /* Subtle light purple background */
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4); /* Glow effect */
+    outline: none;
+  }
+  
+  .search-bar:focus::placeholder {
+    color: transparent; /* Hide placeholder text on focus */
+  }
+  
+  /* Add spacing between the search bar and the filter buttons */
+  .search-bar-container + div {
+    margin-top: 25px; /* Space below the search bar */
+  }
+  
+  /* Button Hover & Active States */
+  button {
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #4a90e2 !important;
+    color: white !important;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Glow Animation on Focus */
+  .search-bar:focus {
+    animation: glow 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes glow {
+    0% {
+      box-shadow: 0 0 0 rgba(74, 144, 226, 0);
+    }
+    100% {
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4); /* Glow effect */
+    }
+  }
+  

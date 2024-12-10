@@ -1,126 +1,143 @@
-from rest_framework import generics
-
-from .models import Project
-from .serializers import ProjectSerializer, BasicProjectSerializer, MenteePreferenceSerializer, MenteePreferenceSaveSerializer
-
-# from projects.models import Season
-from accounts.custom_auth import CookieJWTAuthentication
 from rest_framework import generics, views
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Mentee, Project, MenteePreference, MenteeWishlist
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from accounts.custom_auth import CookieJWTAuthentication
 from accounts.models import UserProfile
-from rest_framework.permissions import AllowAny
-import logging
+from .models import Mentee, Project, MenteePreference, MenteeWishlist
+from .serializers import (
+    ProjectSerializer,
+    BasicProjectSerializer,
+    MenteePreferenceSerializer,
+    MenteePreferenceSaveSerializer,
+)
 from projects.management.commands.upload_projects import upload_projects
+import logging
 
 logger = logging.getLogger(__name__)
-# from .serializers import (
-#     ProjectAdditionSerializer,
-# )
 
 class ProjectDetailView(APIView):
-    permission_classes = []
-    queryset = Project.objects.all()
+    permission_classes = [AllowAny]
     serializer_class = ProjectSerializer
 
     def get(self, request, pk):
-        project = Project.objects.get(pk=pk)
-        serializer = self.serializer_class(project)
-        return Response(serializer.data)
-    
+        try:
+            project = Project.objects.get(pk=pk)
+            serializer = self.serializer_class(project)
+            return Response(serializer.data)
+        except Project.DoesNotExist:
+            return Response({"error": "Project not found"}, status=404)
+
 
 class ProjectWishlist(APIView):
-    authentication_classes  = [CookieJWTAuthentication]
+    authentication_classes = [CookieJWTAuthentication]
     permission_classes = [IsAuthenticated]
-    permission_classes = [AllowAny]  # Allow any user to access the post request
 
     def get(self, request):
-        user_profile = UserProfile.objects.get(user=request.user)
-        
-        # logger.error('\n \n Error 1 \n \n ')
-        mentee = Mentee.objects.get(user=user_profile)
-        # logger.error('\n \n Error 2 \n \n ')
-        preferences = MenteeWishlist.objects.filter(mentee=mentee)
-        # logger.error('\n \n Error 3 \n \n ')
-        project_objects = [preference.project for preference in preferences]
-        # logger.error('\n \n Error 4 \n \n ')
-        serializer = BasicProjectSerializer(project_objects, many=True)
-        # logger.error('\n \n Error 5 \n \n ')
-        return Response(serializer.data)
-    
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            preferences = MenteeWishlist.objects.filter(mentee=mentee)
+            project_objects = [preference.project for preference in preferences]
+            serializer = BasicProjectSerializer(project_objects, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            logger.error(f"Error fetching wishlist: {e}")
+            return Response({"error": "Failed to fetch wishlist"}, status=500)
+
     def post(self, request):
-        # logger.error('\n \n Error 6 \n \n ')
-        # print("HI")
-        user_profile = UserProfile.objects.get(user=request.user)
-        # logger.error('\n \n Error 7 \n \n ')
-        mentee = Mentee.objects.get(user=user_profile)
-        # logger.error('\n \n Error 8 \n \n ')
-        project_id = request.data["project_id"]
-        # logger.error('\n \n Error 9 \n \n ')
-        project = Project.objects.get(pk=project_id)
-        # logger.error('\n \n Error 10 \n \n ')
-        preference = MenteeWishlist(mentee=mentee, project=project)
-        # logger.error('\n \n Error 11 \n \n ')
-        preference.save()
-        # logger.error('\n \n Error 12 \n \n ')
-        return Response({"message": "Project added to wishlist."})
-    
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            project_id = request.data["project_id"]
+            project = Project.objects.get(pk=project_id)
+            preference = MenteeWishlist(mentee=mentee, project=project)
+            preference.save()
+            return Response({"message": "Project added to wishlist."})
+        except Exception as e:
+            logger.error(f"Error adding to wishlist: {e}")
+            return Response({"error": "Failed to add project to wishlist"}, status=500)
+
     def delete(self, request):
-        user_profile = UserProfile.objects.get(user=request.user)
-        mentee = Mentee.objects.get(user=user_profile)
-        project_id = request.GET['project_id']
-        project = Project.objects.get(pk=project_id)
-        preference = MenteeWishlist.objects.get(mentee=mentee, project=project)
-        preference.delete()
-        return Response({"message": "Project removed from wishlist."})
-    
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            project_id = request.GET.get("project_id")
+            project = Project.objects.get(pk=project_id)
+            preference = MenteeWishlist.objects.get(mentee=mentee, project=project)
+            preference.delete()
+            return Response({"message": "Project removed from wishlist."})
+        except Exception as e:
+            logger.error(f"Error removing from wishlist: {e}")
+            return Response({"error": "Failed to remove project from wishlist"}, status=500)
+
+
 class ProjectPreference(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user_profile = UserProfile.objects.get(user=request.user)
-        mentee = Mentee.objects.get(user=user_profile)
-        preferences = MenteePreference.objects.filter(mentee=mentee)
-        serializer = MenteePreferenceSerializer(preferences, many=True)
-        return Response(serializer.data)
-    
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            preferences = MenteePreference.objects.filter(mentee=mentee)
+            serializer = MenteePreferenceSerializer(preferences, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            logger.error(f"Error fetching preferences: {e}")
+            return Response({"error": "Failed to fetch preferences"}, status=500)
+
     def post(self, request):
-        user_profile = UserProfile.objects.get(user=request.user)
-        mentee = Mentee.objects.get(user=user_profile)
-        project_id = request.data["project"]
-        preference = request.data["preference"]
-        sop = request.data["sop"]
-        project = Project.objects.get(pk=project_id)
-        serializer = MenteePreferenceSaveSerializer(data={"mentee": mentee.id, "project": project.id, "preference": preference, "sop": sop})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-    
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            project_id = request.data["project"]
+            preference = request.data["preference"]
+            sop = request.data["sop"]
+            project = Project.objects.get(pk=project_id)
+            serializer = MenteePreferenceSaveSerializer(
+                data={
+                    "mentee": mentee.id,
+                    "project": project.id,
+                    "preference": preference,
+                    "sop": sop,
+                }
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=201)
+            return Response(serializer.errors, status=400)
+        except Exception as e:
+            logger.error(f"Error adding preference: {e}")
+            return Response({"error": "Failed to add preference"}, status=500)
+
     def delete(self, request):
-        user_profile = UserProfile.objects.get(user=request.user)
-        mentee = Mentee.objects.get(user=user_profile)
-        project_id = request.data["project_id"]
-        project = Project.objects.get(pk=project_id)
-        preference = MenteePreference.objects.get(mentee=mentee, project=project)
-        preference.delete()
-        return Response({"message": "Project removed from preferences."})
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            mentee = Mentee.objects.get(user=user_profile)
+            project_id = request.data["project_id"]
+            project = Project.objects.get(pk=project_id)
+            preference = MenteePreference.objects.get(mentee=mentee, project=project)
+            preference.delete()
+            return Response({"message": "Project removed from preferences."})
+        except Exception as e:
+            logger.error(f"Error removing preference: {e}")
+            return Response({"error": "Failed to remove preference"}, status=500)
+
 
 class BasicProjectListView(generics.ListAPIView):
-    permission_classes = []
-    if True:
-        upload_projects("./projects.csv")
+    permission_classes = [AllowAny]
     queryset = Project.objects.all()
     serializer_class = BasicProjectSerializer
 
 
-# class ProjectAddView(generics.CreateAPIView):
-#     queryset = Project.objects.all()
-#     serializer_class = ProjectAdditionSerializer
+class UploadProjectsView(APIView):
+    permission_classes = [AllowAny]
 
-#     def get_serializer_context(self):
-#         context = super().get_serializer_context()
-#         context["request"] = self.request
-#         return context
+    def post(self, request):
+        try:
+            csv_path = request.data.get("csv_path", "./projects.csv")
+            upload_projects(csv_path)
+            return Response({"message": "Projects uploaded successfully."})
+        except Exception as e:
+            logger.error(f"Error uploading projects: {e}")
+            return Response({"error": str(e)}, status=500)

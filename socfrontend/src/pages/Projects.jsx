@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useMemo } from "react";
 import "../components/ProjectCard.css";
+import "../pages/Filter.css";
+
 import {Outlet} from 'react-router-dom'
 
 export default function Projects() {
@@ -12,6 +14,8 @@ export default function Projects() {
   const [details, setDetails] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState(""); // Stores search input
+  
 
   useEffect(() => {
     // Make an HTTP request to fetch the card image from the backend
@@ -92,8 +96,15 @@ export default function Projects() {
   const [filterValue, setFilterValue] = useState('All');
 
   const filteredProjects = useMemo(() => {
-    return details.filter(project => project.general_category.includes(filterValue) || filterValue==="All");
-  }, [details, filterValue]);
+    return details.filter(
+      (project) =>
+        (project.general_category.includes(filterValue) || filterValue === "All") &&
+        (project.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+         project.general_category.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  }, [details, filterValue, searchTerm]);
+  
+
 
   const handleFilterChange = (value) => {
     setFilterValue(value);
@@ -105,6 +116,19 @@ export default function Projects() {
   return (
   
   <section className="project-card min-h-[calc(100vh-72px)] dark:bg-gray-800 dark:text-white " >
+     {/* Search Bar */}
+     <div className="pt-8 flex items-center justify-center">
+     <div className="search-bar-container">
+       <input
+         type="text"
+         placeholder="Search projects..."
+         value={searchTerm}
+         onChange={(e) => setSearchTerm(e.target.value)}
+         className="search-bar"
+       />
+     </div>
+     </div>
+     
 
     <div className="pt-8 flex items-center justify-center ">
       <div className="inline-flex sm:flex-wrap rounded-md shadow-sm" role="group">
